@@ -1,0 +1,92 @@
+﻿title: Demo_Dialogue
+position: 308,34
+---
+This is an example of a Yarn Spinner script. Write your dialogue here!
+===
+title: loadPhase
+---
+<<declare $dialoguePhase = "">>
+<<dialoguePhaseSet "NPC">> 
+<<if $dialoguePhase == "start">>
+<<jump Start>>
+<<else>>
+Dia: I don't know what to do. This is an error debug message. fix ur shit loser
+<<endif>>
+===
+title: Start
+---
+<<declare $agreed_to_help = false>> 
+<<cam_move NPC_Cam_Rig "npc">>
+Dia: Hello there! Nice to see you. I hope you're enjoying this adventure!
+<<if $agreed_to_help == false>>
+<<declare $bunniesLost = 4>>
+Dia: Have you seen any bunnies by any chance? {$bunniesLost} of mine ran out.
+    <<cam_move NPC_Cam_Rig "pc">>
+    ->Yes!
+        Dia: That's great, did you catch any of them?
+            ->Yes I found one!
+                <<set $bunniesLost to $bunniesLost - 1>>
+                Dia: Oh thank goodness! There's now {$bunniesLost} left.
+                Dia: Please come back to me if you find any others. I'd really appreciate the help!
+                    ->Okay I will!
+                        Dia: Thank you so much!
+                        <<set $agreed_to_help = true>>
+                        <<cam_move NPC_Cam_Rig "return">>
+            ->No.
+                Dia: They are quite fast! If you happen to spot one please try to catch it and bring it back!
+                    ->Okay I will!
+                        <<set $agreed_to_help to true>>
+                        <<cam_move NPC_Cam_Rig "return">>
+    ->No.
+        Dia: Oh no. Where could they have gone?
+        Dia: Could you help me look? I think they ran outside when their gate broke.
+            ->Yes!
+                Thank you so much. 
+                <<set $agreed_to_help to true>>
+                <<cam_move NPC_Cam_Rig "return">>
+            ->Sorry, I'm busy.
+            <<cam_move NPC_Cam_Rig "return">>
+<<else>>
+<<jump agreedHelp>>
+Dia: Have you seen any of my bunnies?
+    ->Yes, I caught one!
+        Dia: Thank goodness! Can I have it?
+            ->Yes.
+            <<set $bunniesLost to $bunniesLost - 1>>
+                Dia: Thank you! There is {$bunniesLost} left.
+                <<cam_move NPC_Cam_Rig "return">>
+    ->Sorry, I'm still looking.
+        Dia: No worries. Please let me know if you see them. They might be outside playing in the grass.
+        <<cam_move NPC_Cam_Rig "return">>
+<<endif>>
+===
+title: agreedHelp
+position: -363,143
+---
+Dia: Thank you so much for finding my bunnies! I'm so relieved they made it back!
+    ->No problem
+    ->How are they doing?
+        Dia: They're great!
+        <<cam_move NPC_Cam_Rig "return">>
+===
+title: allBunniesFound
+position: -363,143
+---
+Dia: Thank you so much for finding my bunnies! I'm so relieved they made it back!
+    ->No problem
+    <<cam_move NPC_Cam_Rig "return">>
+    ->How are they doing?
+        Dia: They're great!
+        <<cam_move NPC_Cam_Rig "return">>
+===
+title: background
+position: -363,143
+---
+Dia: I have been raising bunnies here for the past 10 years! They are my pride and joy.
+Dia: I have 5 bunnies: Jack, Harry, Pumpkin, Peanut and Rascal.
+    ->Which one didn't run away?
+        Dia: I don't think Peanut heard the gate break, and she can't see very well.
+            ->Aww
+            <<cam_move NPC_Cam_Rig "return">>
+
+===
