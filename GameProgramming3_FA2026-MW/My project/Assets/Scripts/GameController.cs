@@ -3,6 +3,8 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using StarterAssets;
+using Yarn;
+using Yarn.Unity;
 
 public class GameController : MonoBehaviour
 {
