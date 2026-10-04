@@ -2243,7 +2243,9 @@ Transform:
   m_LocalPosition: {x: -77.65, y: 2.42, z: -13.31}
   m_LocalScale: {x: 0.73483, y: 0.73483, z: 0.73483}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1906500318}
+  - {fileID: 1021052979}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -27.284, z: 0}
 --- !u!1 &372201961
@@ -8139,6 +8141,37 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &1021052978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1021052979}
+  m_Layer: 0
+  m_Name: ExitHouse
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1021052979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021052978}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -2.39, y: -0.262, z: -1.999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 87939314}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1084490763
 GameObject:
   m_ObjectHideFlags: 0
@@ -12924,6 +12957,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NestedParentArmature_Unpack
       objectReference: {fileID: 0}
+    - target: {fileID: 8047161636021232021, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13174,7 +13211,7 @@ MonoBehaviour:
   bunnyHUD: {fileID: 0}
   currentBuns: 0
   collectedBunIDs: []
-  startingLoc: {fileID: 0}
+  startingLoc: {fileID: 2122705930}
   loadLoc: {x: 0, y: 0, z: 0}
   loadRot: {x: 0, y: 0, z: 0, w: 0}
   firstSceneloaded: 0
@@ -13624,7 +13661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 029ce6a575b90564a8433acac3c3a3af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::houseEnter
-  houseReturn: {fileID: 0}
+  houseReturn: {fileID: 1021052979}
 --- !u!65 &1906500317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13654,12 +13691,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1906500315}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.23585439, z: 0, w: 0.9717884}
-  m_LocalPosition: {x: -79.156, y: 3.249, z: -14.193}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: -0.0000029355288, z: -0, w: 1}
+  m_LocalPosition: {x: -2.37227, y: 1.1281521, z: -0.12849414}
+  m_LocalScale: {x: 1.3608588, y: 1.360859, z: 1.3608588}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 87939314}
   m_LocalEulerAnglesHint: {x: 0, y: -27.284, z: 0}
 --- !u!43 &2010938874
 Mesh:
@@ -13839,6 +13876,37 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &2122705929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2122705930}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2122705930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122705929}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -75.21, y: 4.17, z: -46.09}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -13854,4 +13922,4 @@ SceneRoots:
   - {fileID: 1538386425}
   - {fileID: 1865983598}
   - {fileID: 846705439}
-  - {fileID: 1906500318}
+  - {fileID: 2122705930}
