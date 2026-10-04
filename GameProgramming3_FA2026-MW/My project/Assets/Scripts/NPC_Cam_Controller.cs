@@ -21,6 +21,7 @@ public class NPC_Cam_Controller : MonoBehaviour
     [YarnCommand("cam_move")] //giving an attribute that yarnSpinner can accsess. This string is the method name to call in YS.
     public void cam_Move(string focus)
     {
+        Debug.Log("cam_moved called");
         npc_cCam.Priority = priorityValue;
         if(focus == "npc")
         {
@@ -35,6 +36,8 @@ public class NPC_Cam_Controller : MonoBehaviour
             npc_cCam.Priority = 0;
         }
     }
+
+
 
     public void movePlayer()
     {

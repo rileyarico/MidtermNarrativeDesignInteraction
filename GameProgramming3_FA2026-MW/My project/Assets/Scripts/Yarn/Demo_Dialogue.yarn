@@ -6,87 +6,69 @@ This is an example of a Yarn Spinner script. Write your dialogue here!
 title: loadPhase
 ---
 <<declare $dialoguePhase = "">>
-<<dialoguePhaseSet "NPC">> 
+<<dialoguePhaseSet "NPC">>
+<<declare $questSeen = false>>
 <<if $dialoguePhase == "start">>
 <<jump Start>>
 <<else>>
-Dia: I don't know what to do. This is an error debug message. fix ur shit loser
+Farmer: I don't know what to do. This is an error debug message. fix ur shit loser
 <<endif>>
 ===
 title: Start
 ---
-<<declare $agreed_to_help = false>> 
-<<cam_move NPC_Cam_Rig "npc">>
-Dia: Hello there! Nice to see you. I hope you're enjoying this adventure!
-<<if $agreed_to_help == false>>
-<<declare $bunniesLost = 4>>
-Dia: Have you seen any bunnies by any chance? {$bunniesLost} of mine ran out.
-    <<cam_move NPC_Cam_Rig "pc">>
-    ->Yes!
-        Dia: That's great, did you catch any of them?
-            ->Yes I found one!
-                <<set $bunniesLost to $bunniesLost - 1>>
-                Dia: Oh thank goodness! There's now {$bunniesLost} left.
-                Dia: Please come back to me if you find any others. I'd really appreciate the help!
-                    ->Okay I will!
-                        Dia: Thank you so much!
-                        <<set $agreed_to_help = true>>
-                        <<cam_move NPC_Cam_Rig "return">>
-            ->No.
-                Dia: They are quite fast! If you happen to spot one please try to catch it and bring it back!
-                    ->Okay I will!
-                        <<set $agreed_to_help to true>>
-                        <<cam_move NPC_Cam_Rig "return">>
-    ->No.
-        Dia: Oh no. Where could they have gone?
-        Dia: Could you help me look? I think they ran outside when their gate broke.
-            ->Yes!
-                Thank you so much. 
-                <<set $agreed_to_help to true>>
-                <<cam_move NPC_Cam_Rig "return">>
-            ->Sorry, I'm busy.
-            <<cam_move NPC_Cam_Rig "return">>
-<<else>>
-<<jump agreedHelp>>
-Dia: Have you seen any of my bunnies?
-    ->Yes, I caught one!
-        Dia: Thank goodness! Can I have it?
-            ->Yes.
-            <<set $bunniesLost to $bunniesLost - 1>>
-                Dia: Thank you! There is {$bunniesLost} left.
-                <<cam_move NPC_Cam_Rig "return">>
-    ->Sorry, I'm still looking.
-        Dia: No worries. Please let me know if you see them. They might be outside playing in the grass.
-        <<cam_move NPC_Cam_Rig "return">>
+<<if $questSeen == true>>
+<<jump questSeen>>
 <<endif>>
+<<cam_move NPC_Cam_Rig "npc">>
+Farmer: Hello! How are you?
+<<cam_move NPC_Cam_Rig "pc">>
+    ->I'm good!
+        <<cam_move NPC_Cam_Rig "npc">>
+        Farmer: Awesome! I'm doing pretty good myself.
+        Farmer: However, I would be doing better if I had some more corn.
+        Farmer: I'm making cornbread for the wife and I tonight. But I actually haven't picked any.
+        <<jump GiveQuest>>
+    ->I'm okay.
+        <<cam_move NPC_Cam_Rig "pc">>
+        Farmer: Cool. The weather is pretty nice out.
+        Farmer: So nice out, it makes me want to make cornbread!
+        Farmer: The thing is, I actually don't have enough corn.
+        <<jump GiveQuest>>
 ===
-title: agreedHelp
-position: -363,143
+title: GiveQuest
 ---
-Dia: Thank you so much for finding my bunnies! I'm so relieved they made it back!
-    ->No problem
-    ->How are they doing?
-        Dia: They're great!
-        <<cam_move NPC_Cam_Rig "return">>
+Farmer: Would you mind picking 3 corn from our farm?
+<<cam_move NPC_Cam_Rig "pc">>
+    ->Sure.
+        <<jump DescribeLocation>>>>
+    ->Why would I do that?
+        <<cam_move NPC_Cam_Rig "npc">>
+        Farmer: I was going to give you some bread. But I guess not with that attitude.
+        Farmer: Just kidding. But I'll let you have some if you get me 3 pieces okay?
+            <<cam_move NPC_Cam_Rig "pc">>
+            ->Okay.
+                <<cam_move NPC_Cam_Rig "npc">>
+                <<jump DescribeLocation>>>>
 ===
-title: allBunniesFound
-position: -363,143
----
-Dia: Thank you so much for finding my bunnies! I'm so relieved they made it back!
-    ->No problem
-    <<cam_move NPC_Cam_Rig "return">>
-    ->How are they doing?
-        Dia: They're great!
-        <<cam_move NPC_Cam_Rig "return">>
-===
-title: background
-position: -363,143
----
-Dia: I have been raising bunnies here for the past 10 years! They are my pride and joy.
-Dia: I have 5 bunnies: Jack, Harry, Pumpkin, Peanut and Rascal.
-    ->Which one didn't run away?
-        Dia: I don't think Peanut heard the gate break, and she can't see very well.
-            ->Aww
-            <<cam_move NPC_Cam_Rig "return">>
 
+title: DescribeLocation
+---
+<<set $questSeen to true>>
+Farmer: Our farm is out the door you came to the left. There should be some already growing.
+Farmer: If not, there are some seeds you can plant.
+Farmer: Remember I need 3 pieces!
+    <<cam_move NPC_Cam_Rig "pc">>
+    ->Sounds good.
+        <<cam_move NPC_Cam_Rig "return">>
+===
+
+title: questSeen
+---
+<<cam_move NPC_Cam_Rig "npc">>
+Farmer: Hello again!
+Farmer: In case you forgot, I'm looking for 3 pieces of corn to finish this cornbread im making.
+Farmer: Let me know if you find any!
+    <<cam_move NPC_Cam_Rig "pc">>
+    ->Okay!
+        <<cam_move NPC_Cam_Rig "return">>
 ===

@@ -31,7 +31,7 @@ public class NPC_Interact : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             setText(interaction);
             canInteract = true;
@@ -40,7 +40,7 @@ public class NPC_Interact : MonoBehaviour
 
     public void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             setText("");
             canInteract = false;
@@ -55,15 +55,16 @@ public class NPC_Interact : MonoBehaviour
 
     public void Update()
     {
-        if(canInteract)
+        if (canInteract)
         {
-            if(Keyboard.current.eKey.wasPressedThisFrame) //new syntax, no longer getKeyDown
+            if (Keyboard.current.eKey.wasPressedThisFrame) //new syntax, no longer getKeyDown
             {
                 Debug.Log("You talked to the NPC");
                 setText("");
                 camController.movePlayer();
                 dialogue.StartDialogue(npcData.startingNode); //be mindful of the case of yarnSpinner node
                 canInteract = false;
+
             }
         }
     }

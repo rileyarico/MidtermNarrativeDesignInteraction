@@ -13,11 +13,6 @@ public class GameController : MonoBehaviour
     public coinUI coinHUD;
     public int currentCoins = 0;
 
-    public bunnyAdd bunnyUpdate;
-    public bunnyUI bunnyHUD;
-    public int currentBuns = 0;
-    public List<string> collectedBunIDs;
-
 
     public Transform startingLoc;
     public Vector3 loadLoc;
@@ -66,7 +61,7 @@ public class GameController : MonoBehaviour
         }
 
         loadCoins();
-        loadBuns();
+        
     }
 
     public void SpawnCharacter(Vector3 loc, Quaternion rot)
@@ -114,34 +109,6 @@ public class GameController : MonoBehaviour
         coinHUD = ui;
     }
 
-    public void bunnyCollect(string bunID)
-    {
-        collectedBunIDs.Add(bunID);
-        currentBuns++;
-        bunnyUpdate.AddListener(bunnyHUD.addBuns);
-        bunnyUpdate.Invoke(currentBuns);
-    }
-
-    public void loadBuns()
-    {
-        bunnyGrab[] allBunsInScene = FindObjectsByType<bunnyGrab>();
-        if(collectedBunIDs != null)
-        {
-            foreach (bunnyGrab bun in  allBunsInScene)
-            {
-                if(collectedBunIDs.Contains(bun.bunnyID))
-                {
-                    Destroy(bun.transform.parent.gameObject); //destroy parent bc there is a holder with the run radius
-                }
-            }
-        }
-    }
-
-    public void setBunnyUI(bunnyUI bunUI)
-    {
-        bunnyHUD = bunUI;
-    }
-
     public void setPlayerMovement(bool b)
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -173,9 +140,4 @@ public class coinAdd : UnityEvent<int>
 
 }
 
-[System.Serializable]
-public class bunnyAdd : UnityEvent<int>
-{ 
-
-}
 

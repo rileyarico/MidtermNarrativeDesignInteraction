@@ -1038,13 +1038,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1465649197}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: -0.02}
+  m_LocalRotation: {x: -0, y: 0.39704868, z: -0, w: 0.91779757}
+  m_LocalPosition: {x: -0.67499924, y: 0, z: 1.5299997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 879774605}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 46.788, z: 0}
 --- !u!1 &1506305682
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,7 +1206,7 @@ MonoBehaviour:
   canInteract: 0
   dialogue: {fileID: 764162291}
   camController: {fileID: 879774604}
-  npcData: {fileID: 11400000, guid: f5bd18f0598ce5742b40abd88faa92c8, type: 2}
+  npcData: {fileID: 11400000, guid: b085563507b7f8c47b7e7debbb4c1724, type: 2}
 --- !u!135 &1734269677
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1317,7 +1317,7 @@ Transform:
   m_GameObject: {fileID: 1734269675}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.398, y: 1.008, z: -6.61}
+  m_LocalPosition: {x: 21.551, y: 1.008, z: -8.666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1358,12 +1358,6 @@ MonoBehaviour:
       m_Calls: []
   coinHUD: {fileID: 0}
   currentCoins: 0
-  bunnyUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  bunnyHUD: {fileID: 0}
-  currentBuns: 0
-  collectedBunIDs: []
   startingLoc: {fileID: 0}
   loadLoc: {x: 0, y: 0, z: 0}
   loadRot: {x: 0, y: 0, z: 0, w: 0}

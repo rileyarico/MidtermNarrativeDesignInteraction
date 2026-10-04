@@ -13205,12 +13205,6 @@ MonoBehaviour:
       m_Calls: []
   coinHUD: {fileID: 0}
   currentCoins: 0
-  bunnyUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  bunnyHUD: {fileID: 0}
-  currentBuns: 0
-  collectedBunIDs: []
   startingLoc: {fileID: 2122705930}
   loadLoc: {x: 0, y: 0, z: 0}
   loadRot: {x: 0, y: 0, z: 0, w: 0}
@@ -13513,7 +13507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1701e003c245f448ac8a4739804b6df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::bunnyUI
-  bunnyAmtText: {fileID: 1504605858}
 --- !u!114 &1593560876
 MonoBehaviour:
   m_ObjectHideFlags: 0
