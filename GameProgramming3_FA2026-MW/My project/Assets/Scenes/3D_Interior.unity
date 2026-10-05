@@ -1895,12 +1895,6 @@ MonoBehaviour:
       m_Calls: []
   coinHUD: {fileID: 0}
   currentCoins: 0
-  bunnyUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  bunnyHUD: {fileID: 0}
-  currentBuns: 0
-  collectedBunIDs: []
   startingLoc: {fileID: 0}
   loadLoc: {x: 0, y: 0, z: 0}
   loadRot: {x: 0, y: 0, z: 0, w: 0}

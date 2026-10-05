@@ -6,69 +6,116 @@ This is an example of a Yarn Spinner script. Write your dialogue here!
 title: loadPhase
 ---
 <<declare $dialoguePhase = "">>
-<<dialoguePhaseSet "NPC">>
-<<declare $questSeen = false>>
+<<declare $visitedYet = false>>
+<<declare $bunniesLost = 4>>
+<<dialoguePhaseSet NPC>> 
 <<if $dialoguePhase == "start">>
 <<jump Start>>
+<<elseif $dialoguePhase == "questTaken">>
+<<jump quest_taken>>
+<<elseif $dialoguePhase == "questComplete">>
+<<jump quest_complete>>
+<<elseif $dialoguePhase == "questCompleteReturn">>
+<<jump quest_complete_return>>
 <<else>>
 Farmer: I don't know what to do. This is an error debug message. fix ur shit loser
 <<endif>>
 ===
 title: Start
 ---
-<<if $questSeen == true>>
-<<jump questSeen>>
-<<endif>>
-<<cam_move NPC_Cam_Rig "npc">>
-Farmer: Hello! How are you?
-<<cam_move NPC_Cam_Rig "pc">>
-    ->I'm good!
+<<set $visitedYet to true>>
+<<cam_move NPC_Cam_Rig "npc">> //Syntax for calling a function is: YarnCommand GameObject.name Parameter
+Farmer: Hello there! Nice to see you. I hope you're enjoying this adventure!
+Farmer: Have you seen any bunnies by any chance? {$bunniesLost} of mine ran out.
+    <<cam_move NPC_Cam_Rig "pc">>
+    ->Yes!
         <<cam_move NPC_Cam_Rig "npc">>
-        Farmer: Awesome! I'm doing pretty good myself.
-        Farmer: However, I would be doing better if I had some more corn.
-        Farmer: I'm making cornbread for the wife and I tonight. But I actually haven't picked any.
-        <<jump GiveQuest>>
-    ->I'm okay.
-        <<cam_move NPC_Cam_Rig "pc">>
-        Farmer: Cool. The weather is pretty nice out.
-        Farmer: So nice out, it makes me want to make cornbread!
-        Farmer: The thing is, I actually don't have enough corn.
-        <<jump GiveQuest>>
-===
-title: GiveQuest
----
-Farmer: Would you mind picking 3 corn from our farm?
-<<cam_move NPC_Cam_Rig "pc">>
-    ->Sure.
-        <<jump DescribeLocation>>>>
-    ->Why would I do that?
-        <<cam_move NPC_Cam_Rig "npc">>
-        Farmer: I was going to give you some bread. But I guess not with that attitude.
-        Farmer: Just kidding. But I'll let you have some if you get me 3 pieces okay?
+        : That's great, did you catch any of them?
             <<cam_move NPC_Cam_Rig "pc">>
-            ->Okay.
+            ->Yes I found one!
+                <<set $bunniesLost to $bunniesLost - 1>>
                 <<cam_move NPC_Cam_Rig "npc">>
-                <<jump DescribeLocation>>>>
+                Farmer: Oh thank goodness! There's now {$bunniesLost} left.
+                Farmer: Please come back to me if you find any others. I'd really appreciate the help!
+                    <<cam_move NPC_Cam_Rig "pc">>
+                    ->Okay I will!
+                        <<cam_move NPC_Cam_Rig "npc">>
+                        Farmer: Thank you so much!
+                        //<<set $agreed_to_help = true>>
+                        <<dialoguePhaseGetter NPC "questTaken">> 
+                        <<cam_move NPC_Cam_Rig "return">>
+            ->No.
+                Farmer: They are quite fast! If you happen to spot one please try to catch it and bring it back!
+                    ->Okay I will!
+                        <<dialoguePhaseGetter NPC "questTaken">> 
+                        <<cam_move NPC_Cam_Rig "return">>
+    ->No.
+        Farmer: Oh no. Where could they have gone?
+        Farmer: Could you help me look? I think they ran outside when their gate broke.
+            ->Yes!
+                Thank you so much. 
+                <<dialoguePhaseGetter NPC "questTaken">> 
+                <<cam_move NPC_Cam_Rig "return">>
+            ->Sorry, I'm busy.
+                <<dialoguePhaseGetter NPC "repeat">> 
+                <<cam_move NPC_Cam_Rig "return">>
 ===
 
-title: DescribeLocation
----
-<<set $questSeen to true>>
-Farmer: Our farm is out the door you came to the left. There should be some already growing.
-Farmer: If not, there are some seeds you can plant.
-Farmer: Remember I need 3 pieces!
-    <<cam_move NPC_Cam_Rig "pc">>
-    ->Sounds good.
-        <<cam_move NPC_Cam_Rig "return">>
-===
-
-title: questSeen
+title:quest_taken
 ---
 <<cam_move NPC_Cam_Rig "npc">>
-Farmer: Hello again!
-Farmer: In case you forgot, I'm looking for 3 pieces of corn to finish this cornbread im making.
-Farmer: Let me know if you find any!
+Farmer: Good to see you! Did you get the thing I asked?
     <<cam_move NPC_Cam_Rig "pc">>
-    ->Okay!
+    ->Nope.
         <<cam_move NPC_Cam_Rig "return">>
+    ->Yes!
+        <<dialoguePhaseGetter NPC "questComplete">> 
+        <<jump quest_complete>>
+===
+
+title:quest_complete
+---
+<<if $visitedYet is false>>
+<<cam_move NPC_Cam_Rig "npc">>
+Farmer: Woah, You have what I wanted!
+Farmer: I can take that off your hands, thank you!
+    <<cam_move NPC_Cam_Rig "pc">>
+    ->No problem.
+        <<dialoguePhaseGetter NPC "questCompleteReturn">> 
+        <<set $visitedYet to true>>
+        <<cam_move NPC_Cam_Rig "return">>
+<<else>>
+<<cam_move NPC_Cam_Rig "npc">>
+Farmer: Oh my goodness you found them? Thank you so much!!
+    <<cam_move NPC_Cam_Rig "pc">>
+    ->You're welcome!
+        <<dialoguePhaseGetter NPC "questCompleteReturn">> 
+        <<cam_move NPC_Cam_Rig "return">>
+<<endif>>
+===
+
+title:quest_complete_return
+---
+<<cam_move NPC_Cam_Rig "npc">>
+Farmer: Thank you so much for finding my bunnies! You're the best.
+    <<cam_move NPC_Cam_Rig "pc">>
+    ->Of course!
+        <<cam_move NPC_Cam_Rig "return">>
+
+===
+
+
+title:repeat
+---
+<<cam_move NPC_Cam_Rig "npc">>
+Farmer: Man, I really wish someone would help me find my bunnies...
+    <<cam_move NPC_Cam_Rig "pc">>
+    ->I can help.
+        <<cam_move NPC_Cam_Rig "npc">>
+        <<dialoguePhaseGetter NPC "questTaken">> 
+        Farmer: Really?? Thank you!
+        Farmer: Let me know when you find them. There are 4.
+    ->That would be nice.
+        <<cam_move NPC_Cam_Rig "return">>
+
 ===

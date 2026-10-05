@@ -15,6 +15,15 @@ public class GameController : MonoBehaviour
     public coinUI coinHUD;
     public int currentCoins = 0;
 
+    public NPC_Data questGiver; 
+    //this is going to be complicated, we can hold onto this npc data,
+    //but we will need to change the current phase, which is difficult because
+    //we are doing so through the NPC_Interact script.
+        //Box interact does something similar, but we have to get it to carry across scenes
+
+    //Will we need to get NPC_interact to grab the data from us? Could work...
+
+
 
     public Transform startingLoc;
     public Vector3 loadLoc;

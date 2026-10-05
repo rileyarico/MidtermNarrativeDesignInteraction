@@ -64,15 +64,33 @@ public class NPC_Interact : MonoBehaviour
                 camController.movePlayer();
                 dialogue.StartDialogue(npcData.startingNode); //be mindful of the case of yarnSpinner node
                 canInteract = false;
-
             }
         }
     }
-
+    //this is the set of the current phase of our YS dialogue, pulled from our npcData variable
     [YarnCommand("dialoguePhaseSet")]
     public void setYarnPhase()
     {
         InMemoryVariableStorage vData = GameObject.FindAnyObjectByType<InMemoryVariableStorage>();
         vData.SetValue("$dialoguePhase", npcData.currentPhase.ToString());
+    }
+
+    //this is the 'get' of the current phase MADE in our yarnSpinner dialogue based on what options we have selected
+    [YarnCommand("dialoguePhaseGetter")]
+    public void getYarnPhase(string phase)
+    {
+        if (phase == "questTaken")
+        {
+            npcData.currentPhase = NPC_Data.dialoguePhase.questTaken;
+        }
+        if (phase == "questCompleteReturn")
+        {
+            npcData.currentPhase = NPC_Data.dialoguePhase.questCompleteReturn;
+        }
+    }
+
+    public void OnApplicationQuit()
+    {
+        npcData.resetData();
     }
 }
