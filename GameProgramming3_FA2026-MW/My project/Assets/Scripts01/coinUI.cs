@@ -7,7 +7,7 @@ public class coinUI : MonoBehaviour
 
     private void Awake()
     {
-        GameController.instance.setUI(this);
+        //GameController.instance.setUI(this);
         GameController.instance.setUI(this);
     }
 

@@ -82,6 +82,8 @@ Farmer: I can take that off your hands, thank you!
     <<cam_move NPC_Cam_Rig "pc">>
     ->No problem.
         <<dialoguePhaseGetter NPC "questCompleteReturn">> 
+        //subtract the required amt from gamecontroller currentcoins
+        <<SubtractQuestAmt GameController 3>>
         <<set $visitedYet to true>>
         <<cam_move NPC_Cam_Rig "return">>
 <<else>>
@@ -90,6 +92,7 @@ Farmer: Oh my goodness you found them? Thank you so much!!
     <<cam_move NPC_Cam_Rig "pc">>
     ->You're welcome!
         <<dialoguePhaseGetter NPC "questCompleteReturn">> 
+        <<SubtractQuestAmt GameController 3>>
         <<cam_move NPC_Cam_Rig "return">>
 <<endif>>
 ===

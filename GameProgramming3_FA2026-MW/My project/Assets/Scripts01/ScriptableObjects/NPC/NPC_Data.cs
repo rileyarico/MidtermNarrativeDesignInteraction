@@ -5,6 +5,7 @@ public class NPC_Data : ScriptableObject
 {
     public string npcName;
     public string startingNode;
+    public int amountNeeded = 0;
     public enum dialoguePhase { start, repeat, questTaken, questComplete, questCompleteReturn };
     public dialoguePhase currentPhase;
 

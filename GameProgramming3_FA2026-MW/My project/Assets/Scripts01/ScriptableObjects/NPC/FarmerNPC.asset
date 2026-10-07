@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPC_Data
   npcName: Farmer
   startingNode: loadPhase
+  amountNeeded: 3
   currentPhase: 0

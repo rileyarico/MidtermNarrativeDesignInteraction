@@ -15,11 +15,11 @@ public class GameController : MonoBehaviour
     public coinUI coinHUD;
     public int currentCoins = 0;
 
-    public NPC_Data questGiver; 
+    //public NPC_Data questGiver; 
     //this is going to be complicated, we can hold onto this npc data,
     //but we will need to change the current phase, which is difficult because
     //we are doing so through the NPC_Interact script.
-        //Box interact does something similar, but we have to get it to carry across scenes
+    //Box interact does something similar, but we have to get it to carry across scenes
 
     //Will we need to get NPC_interact to grab the data from us? Could work...
 
@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
 
     public void Awake()
     {
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }
@@ -49,16 +49,19 @@ public class GameController : MonoBehaviour
             SceneManager.sceneLoaded += OnSceneLoaded;
             //Debug.Log("Loaded Scene: " + SceneManager.GetActiveScene());
         }
-
+        if (currentCoins <= 0)
+        {
+            coinHUD.gameObject.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     //this method receives the `sceneLoaded` UnityAction and requires the Scene and LoadSceneMode arguments
     //we use this method to check what current scene has been loaded
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.buildIndex == 0)
+        if (scene.buildIndex == 0)
         {
-            if(!firstSceneloaded)
+            if (!firstSceneloaded)
             {
                 Debug.Log("Spawned Character at starting Location");
                 SpawnCharacter(startingLoc.position, startingLoc.rotation);
@@ -70,9 +73,26 @@ public class GameController : MonoBehaviour
                 SpawnCharacter(loadLoc, loadRot);
             }
         }
+        if (coinHUD == null)
+        {
+            coinHUD = FindAnyObjectByType<coinUI>();
+            Debug.Log("Setting coin UI. It is now " + coinHUD);
+            if (currentCoins <= 0)
+            {
+                coinHUD.gameObject.transform.parent.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            Debug.Log("Couldn't find coinUI");
+            if (currentCoins > 0)
+            {
+                coinHUD.gameObject.transform.parent.gameObject.SetActive(true);
+            }
+        }
 
         loadCoins();
-        
+
     }
 
     public void SpawnCharacter(Vector3 loc, Quaternion rot)
@@ -91,8 +111,13 @@ public class GameController : MonoBehaviour
 
     public void coinCollect(string coinID)
     {
+        Debug.Log("Coin collect called");
+        if (currentCoins == 0)
+        {
+            coinHUD.gameObject.transform.parent.gameObject.SetActive(true);
+        }
         //Debug.Log("Coin ID " + coinID);
-        collectedCoinIDs.Add(coinID);  
+        collectedCoinIDs.Add(coinID);
         currentCoins++;
         coinUpdate.AddListener(coinHUD.addCoins);
         coinUpdate.Invoke(currentCoins);
@@ -102,16 +127,17 @@ public class GameController : MonoBehaviour
     {
         coinGrab[] allCoinsInScene = FindObjectsByType<coinGrab>();
 
-        if(collectedCoinIDs != null)
+        if (collectedCoinIDs != null)
         {
             foreach (coinGrab coin in allCoinsInScene)
             {
-                if(collectedCoinIDs.Contains(coin.coinID))
+                if (collectedCoinIDs.Contains(coin.coinID))
                 {
                     Destroy(coin.gameObject);
                 }
             }
         }
+        coinHUD.addCoins(currentCoins);
     }
 
     //this is a 'setter' method for the coin HUD variable in this class
@@ -125,7 +151,7 @@ public class GameController : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         ThirdPersonController tpc = player.GetComponent<ThirdPersonController>();
 
-        if(b)
+        if (b)
         {
             tpc.enabled = false;
         }
@@ -142,6 +168,14 @@ public class GameController : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = movePos.position;
     }
+
+    [YarnCommand("SubtractQuestAmt")]
+    public void getCoinAmt(int amt)
+    {
+        currentCoins -= amt;
+        loadCoins();
+    }
+
 
 }
 

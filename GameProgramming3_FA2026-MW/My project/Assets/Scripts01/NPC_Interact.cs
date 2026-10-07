@@ -21,12 +21,23 @@ public class NPC_Interact : MonoBehaviour
     public DialogueRunner dialogue;
     public NPC_Cam_Controller camController;
     public NPC_Data npcData;
+    public bool questComplete = false;
+
 
     public void Start()
     {
         //this behavior is a bit 'static' compared to previous system design techniques
         //but we are making this more 'hard-coded' in an attempt to standardize our NPC_Cam_Rig system
         camController = transform.GetComponentInChildren<NPC_Cam_Controller>();
+    }
+
+    private void Awake()
+    {
+        if(GameController.instance.currentCoins >= npcData.amountNeeded)
+        {
+            questComplete = true;
+            npcData.currentPhase = NPC_Data.dialoguePhase.questComplete;
+        }
     }
 
     public void OnTriggerEnter(Collider other)
