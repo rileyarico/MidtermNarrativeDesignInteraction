@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using StarterAssets;
 using Yarn;
 using Yarn.Unity;
+using UnityEngine.Assemblies;
 
 public class GameController : MonoBehaviour
 {
@@ -32,6 +33,10 @@ public class GameController : MonoBehaviour
     public GameObject ThirdPersonRig;
 
     public List<string> collectedCoinIDs;
+
+    public bool GateIsOpen = false;
+    public bool talkedToFarmer = false;
+    public static int cornForYarn = 0;
 
     public void Awake()
     {
@@ -94,12 +99,25 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Couldn't find coinUI");
+            Debug.Log("Coin UI is not null");
             if (currentCoins > 0)
             {
                 Debug.Log("Set UI active.");
                 coinHUD.gameObject.transform.parent.gameObject.SetActive(true);
+                loadCoins();
             }
+            else
+            {
+                coinHUD.gameObject.transform.parent.gameObject.SetActive(false);
+            }
+        }
+
+        if (GateIsOpen)
+        {
+            Debug.Log("GateIsOpen = true");
+            Gate gates = FindAnyObjectByType<Gate>();
+            gates.Open();
+            Debug.Log("Gates open!!");
         }
 
         loadCoins();
@@ -130,6 +148,7 @@ public class GameController : MonoBehaviour
         //Debug.Log("Coin ID " + coinID);
         collectedCoinIDs.Add(coinID);
         currentCoins++;
+        cornForYarn++;
         coinUpdate.AddListener(coinHUD.addCoins);
         coinUpdate.Invoke(currentCoins);
     }
@@ -182,12 +201,30 @@ public class GameController : MonoBehaviour
     }
 
     [YarnCommand("SubtractQuestAmt")]
-    public void getCoinAmt(int amt)
+    public void GetCoinAmt(int amt)
     {
         currentCoins -= amt;
         loadCoins();
     }
 
+    [YarnCommand("OpenGate")]
+    public void openGates()
+    {
+        Debug.Log("openGates called");
+        GateIsOpen = true; 
+    }
+
+    [YarnFunction("GetCornAmt")]
+    public static int ReturnCoinAmt()
+    {
+        return cornForYarn; //must be static
+    }
+
+    [YarnCommand("VisitedFarmer")]
+    public void VisitedFarmer()
+    {
+        talkedToFarmer = true;
+    }
 
 }
 
