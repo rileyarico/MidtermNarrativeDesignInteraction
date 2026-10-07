@@ -49,6 +49,15 @@ public class GameController : MonoBehaviour
             SceneManager.sceneLoaded += OnSceneLoaded;
             //Debug.Log("Loaded Scene: " + SceneManager.GetActiveScene());
         }
+        if (coinHUD == null)
+        {
+            coinHUD = FindAnyObjectByType<coinUI>();
+            Debug.Log("Setting coin UI. It is now " + coinHUD);
+            if (currentCoins <= 0)
+            {
+                coinHUD.gameObject.transform.parent.gameObject.SetActive(false);
+            }
+        }
         if (currentCoins <= 0)
         {
             coinHUD.gameObject.transform.parent.gameObject.SetActive(false);
@@ -79,6 +88,7 @@ public class GameController : MonoBehaviour
             Debug.Log("Setting coin UI. It is now " + coinHUD);
             if (currentCoins <= 0)
             {
+                Debug.Log("Scene loaded. Setting UI innactive bc no coins");
                 coinHUD.gameObject.transform.parent.gameObject.SetActive(false);
             }
         }
@@ -87,6 +97,7 @@ public class GameController : MonoBehaviour
             Debug.Log("Couldn't find coinUI");
             if (currentCoins > 0)
             {
+                Debug.Log("Set UI active.");
                 coinHUD.gameObject.transform.parent.gameObject.SetActive(true);
             }
         }
@@ -138,6 +149,7 @@ public class GameController : MonoBehaviour
             }
         }
         coinHUD.addCoins(currentCoins);
+        Debug.Log("Coin UI: " + coinHUD);
     }
 
     //this is a 'setter' method for the coin HUD variable in this class
