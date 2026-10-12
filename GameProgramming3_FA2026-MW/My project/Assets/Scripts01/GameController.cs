@@ -40,6 +40,14 @@ public class GameController : MonoBehaviour
     public static int cornForYarn = 0;
     public int heldSeeds = 0;
 
+    private void Update()
+    {
+        if(currentCoins > 0)
+        {
+            Debug.Log("collected first coin, setting UI active");
+            coinHUD.gameObject.transform.parent.gameObject.SetActive(true);
+        }
+    }
     public void Awake()
     {
         if (instance != null && instance != this)
@@ -158,6 +166,8 @@ public class GameController : MonoBehaviour
     public void addCoinAmt(int amt)
     {
         currentCoins += amt;
+        coinUpdate.AddListener(coinHUD.addCoins);
+        coinUpdate.Invoke(currentCoins);
     }
 
     public void takeSeeds(int amt)

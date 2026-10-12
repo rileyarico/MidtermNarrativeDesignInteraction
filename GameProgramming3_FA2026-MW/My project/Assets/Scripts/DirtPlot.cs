@@ -16,12 +16,12 @@ public class DirtPlot : MonoBehaviour
     public Image growthProgressBar;
     public TextMeshProUGUI displayCrop; 
 
-    private SeedTypes crop;
-    private bool isOccupied;
+    public SeedTypes crop;
+    public bool isOccupied;
     private float growTime;
     private float timeLeft;
     private GameObject finalGrow;
-    private bool doneGrowing;
+    public bool doneGrowing;
 
     private GameObject currentStatePrefab;
 
@@ -37,7 +37,6 @@ public class DirtPlot : MonoBehaviour
         Vector3 whereGrow = new Vector3(transform.position.x, (float)(transform.position.y + 0.5), transform.position.z);
         //growTransform.position = whereGrow;
         growSpace = whereGrow;
-        doneGrowing = false;
     }
 
     // Update is called once per frame
@@ -190,13 +189,13 @@ public class DirtPlot : MonoBehaviour
     {
             doneGrowing = false;
             //check if the type is null, otherwise we don't destroy it & instantiate prefab
-            if (seed.type == null)
+            /*if (seed.type == null)
             {
                 Debug.Log("Seed type on this object is null");
                 return;
-            }
+            }*/
 
-            crop = seed.type;
+            crop = willPlantThis.type;
             Debug.Log("Tried to plant " + crop.seedName);
 
             if (crop.grownPrefab != null)
