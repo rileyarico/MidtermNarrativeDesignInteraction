@@ -11,6 +11,12 @@ public class coinGrab : MonoBehaviour
     public void Awake()
     {
         coinID = this.name + "-" + transform.position.ToString();
+        /*if (interactText == null)
+        {
+            Debug.Log("Interact text is null");
+            interactText = GameObject.Find("InteractText").GetComponent<TextMeshProUGUI>();
+            Debug.Log("Interact text is = " + interactText);
+        }*/
     }
     public void OnTriggerEnter(Collider other)
     {

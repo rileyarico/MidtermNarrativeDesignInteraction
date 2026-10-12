@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 4066093183182749144}
   - component: {fileID: 3769623993915575014}
   - component: {fileID: 272931891774163904}
+  - component: {fileID: 7800186594195400694}
   m_Layer: 0
   m_Name: DirtPlot
   m_TagString: Untagged
@@ -281,6 +282,27 @@ MonoBehaviour:
   - {fileID: 5092338914941777091, guid: 093a2dc5647168f479c9bfcbb74ce711, type: 3}
   growthProgressBar: {fileID: 2009664356099414462}
   displayCrop: {fileID: 7827523373190396247}
+--- !u!135 &7800186594195400694
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4526697194823586093}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.4
+  m_Center: {x: 0, y: 1.41, z: 0}
 --- !u!1 &4529627178248809836
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,6 +361,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

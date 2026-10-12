@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class DirtPlot : MonoBehaviour
@@ -23,6 +24,10 @@ public class DirtPlot : MonoBehaviour
     private bool doneGrowing;
 
     private GameObject currentStatePrefab;
+
+    public TextMeshProUGUI interactText;
+    public bool canInteract = false;
+    public Seed willPlantThis;
 
 
 
@@ -65,11 +70,38 @@ public class DirtPlot : MonoBehaviour
                 }
             }
         }
-    }
+
+        if (canInteract)
+        {
+            if (Keyboard.current.eKey.wasPressedThisFrame) 
+            {
+                if (isOccupied == false)
+                {
+                    interactText.text = "";
+                    GameController.instance.takeSeeds(1);
+                    Debug.Log("You planted a crop");
+                    plantThis(willPlantThis);
+                    canInteract = false;
+                }
+                else if(doneGrowing)
+                {
+                    GameController.instance.addCoinAmt(1);
+                    foreach (Transform child in this.gameObject.transform)
+                    {
+                        Destroy(child.gameObject);
+                    }
+                    interactText.text = "";
+                    canInteract = true;
+                }
+            }
+        }
+    
+}
 
     private void ResetEverything()
     {
         crop = null;
+        doneGrowing = false;
         isOccupied = false;
         currentStatePrefab = null;
         growthProgressBar.fillAmount = 0;
@@ -113,21 +145,52 @@ public class DirtPlot : MonoBehaviour
         //sets timer back if this is not a final state
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(isOccupied == false && GameController.instance.heldSeeds > 0)
+        {
+            canInteract = true;
+            interactText.text = "Press E to plant";
+        }
+        else
+        {  
+            canInteract = false;
+            interactText.text = "";
+        }
+
+        if(doneGrowing == true)
+        {
+            canInteract = true;
+            interactText.text = "Press E to Harvest";
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        interactText.text = "";
+        canInteract = false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        //returns if space is already occupied
-        if(isOccupied == true)
+        Seed plantSeed = collision.gameObject.GetComponent<Seed>();
+        if (plantSeed != null && isOccupied == false)
         {
-            Debug.Log("Space is already occupied!");
-            return;
+            plantThis(plantSeed);
+            Debug.Log("Called plantThis");
+            Destroy(collision.gameObject); 
         }
-        //else
-        Seed seed = collision.gameObject.GetComponent<Seed>();
-        if(seed != null)
+        else
         {
+            Debug.Log("Seed is null, or space is occupied");
+        }
+    }
+
+    public void plantThis(Seed seed)
+    {
             doneGrowing = false;
             //check if the type is null, otherwise we don't destroy it & instantiate prefab
-            if(seed.type == null)
+            if (seed.type == null)
             {
                 Debug.Log("Seed type on this object is null");
                 return;
@@ -140,7 +203,7 @@ public class DirtPlot : MonoBehaviour
             {
                 finalGrow = crop.grownPrefab;
                 //also checks if the grown prefab exists so we can actually instantiate it later.
-                Destroy(collision.gameObject);
+                //Destroy(gm.gameObject);
                 //instantiates the first crop state and then increases the index
                 currentStatePrefab = Instantiate(growStates[0], growSpace, Quaternion.identity, this.gameObject.transform);
                 growStateIndex = 1;
@@ -159,6 +222,6 @@ public class DirtPlot : MonoBehaviour
                 timeLeft = 15f;
                 manageIntervals();
             }
-        }
+        
     }
 }

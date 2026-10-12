@@ -36,7 +36,9 @@ public class GameController : MonoBehaviour
 
     public bool GateIsOpen = false;
     public bool talkedToFarmer = false;
+    public string farmerState;
     public static int cornForYarn = 0;
+    public int heldSeeds = 0;
 
     public void Awake()
     {
@@ -121,7 +123,7 @@ public class GameController : MonoBehaviour
         }
 
         loadCoins();
-
+        loadNPCData();
     }
 
     public void SpawnCharacter(Vector3 loc, Quaternion rot)
@@ -151,6 +153,16 @@ public class GameController : MonoBehaviour
         cornForYarn++;
         coinUpdate.AddListener(coinHUD.addCoins);
         coinUpdate.Invoke(currentCoins);
+    }
+
+    public void addCoinAmt(int amt)
+    {
+        currentCoins += amt;
+    }
+
+    public void takeSeeds(int amt)
+    {
+        heldSeeds -= amt;
     }
 
     public void loadCoins()
@@ -224,6 +236,15 @@ public class GameController : MonoBehaviour
     public void VisitedFarmer()
     {
         talkedToFarmer = true;
+    }
+
+    public void loadNPCData()
+    {
+        NPC_Interact npc = FindAnyObjectByType<NPC_Interact>();
+        if (npc != null)
+        {
+            npc.getYarnPhase(farmerState);
+        }
     }
 
 }

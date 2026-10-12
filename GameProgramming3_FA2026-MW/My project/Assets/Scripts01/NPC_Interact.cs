@@ -93,10 +93,14 @@ public class NPC_Interact : MonoBehaviour
         if (phase == "questTaken")
         {
             npcData.currentPhase = NPC_Data.dialoguePhase.questTaken;
+            GameController.instance.farmerState = "questTaken";
+            Debug.Log("farmerState is = " + GameController.instance.farmerState);
         }
         if (phase == "questCompleteReturn")
         {
             npcData.currentPhase = NPC_Data.dialoguePhase.questCompleteReturn;
+            GameController.instance.farmerState = "questCompleteReturn";
+            Debug.Log("farmerState is = " + GameController.instance.farmerState);
         }
     }
 
