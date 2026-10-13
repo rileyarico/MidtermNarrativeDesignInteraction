@@ -77,11 +77,11 @@ Farmer: Hello again! Were you able to find the corn?
     ->Yes!
         <<cam_move NPC_Cam_Rig "npc">>
         Farmer: Hmmm... I don't see 3 Corn with you...
-        <<declare $cornLeft = GetCornAmt()>>
-        Farmer: It looks like you have {3 - $cornLeft} left to find!
+        <<declare $cornHas = GetCornAmt()>>
+        <<declare $cornNeeded = 3 - $cornHas>>
+        Farmer: It looks like you have {$cornNeeded} left to find!
         Farmer: Take your time! The farm is outside to the left.
-        <<dialoguePhaseGetter NPC "questComplete">> 
-        <<jump quest_complete>>
+            <<cam_move NPC_Cam_Rig "return">>
 ===
 
 title:quest_complete

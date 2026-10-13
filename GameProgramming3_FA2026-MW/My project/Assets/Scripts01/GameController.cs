@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
             //Debug.Log("collected first coin, setting UI active");
             coinHUD.gameObject.transform.parent.gameObject.SetActive(true);
         }
+        cornForYarn = currentCoins;
     }
     public void Awake()
     {
@@ -160,7 +161,6 @@ public class GameController : MonoBehaviour
         //Debug.Log("Coin ID " + coinID);
         collectedCoinIDs.Add(coinID);
         currentCoins++;
-        cornForYarn++;
         coinUpdate.AddListener(coinHUD.addCoins);
         coinUpdate.Invoke(currentCoins);
     }
@@ -241,6 +241,7 @@ public class GameController : MonoBehaviour
     [YarnFunction("GetCornAmt")]
     public static int ReturnCoinAmt()
     {
+        Debug.Log("CornForYarn = " + cornForYarn);
         return cornForYarn; //must be static
     }
 
