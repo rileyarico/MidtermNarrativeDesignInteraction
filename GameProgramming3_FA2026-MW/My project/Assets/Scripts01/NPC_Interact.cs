@@ -90,6 +90,7 @@ public class NPC_Interact : MonoBehaviour
     [YarnCommand("dialoguePhaseGetter")]
     public void getYarnPhase(string phase)
     {
+        Debug.Log("GetYarnPhase called. Setting phase to " + phase);
         if (phase == "questTaken")
         {
             npcData.currentPhase = NPC_Data.dialoguePhase.questTaken;
@@ -100,6 +101,12 @@ public class NPC_Interact : MonoBehaviour
         {
             npcData.currentPhase = NPC_Data.dialoguePhase.questCompleteReturn;
             GameController.instance.farmerState = "questCompleteReturn";
+            Debug.Log("farmerState is = " + GameController.instance.farmerState);
+        }
+        if(phase == "repeat")
+        {
+            npcData.currentPhase = NPC_Data.dialoguePhase.repeat;
+            GameController.instance.farmerState = "repeat";
             Debug.Log("farmerState is = " + GameController.instance.farmerState);
         }
     }

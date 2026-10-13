@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
     public static bool talkedFarmerYarn = false;
     public string farmerState;
     public static int cornForYarn = 0;
-    public int heldSeeds = 0;
+    public int heldSeeds = 5;
 
     private void Update()
     {
@@ -265,7 +265,7 @@ public class GameController : MonoBehaviour
         Debug.Log("NPC is " + npcInter);
         if (npcInter != null)
         {
-            Debug.Log("loadNPCData called");
+            Debug.Log("loadNPCData called. State is " + farmerState);
             npcInter.getYarnPhase(farmerState);
         }
     }

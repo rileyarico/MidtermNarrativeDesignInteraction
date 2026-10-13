@@ -16,6 +16,8 @@ title: loadPhase
 <<jump quest_complete>>
 <<elseif $dialoguePhase == "questCompleteReturn">>
 <<jump quest_complete_return>>
+<<elseif $dialoguePhase == "repeat">>
+<<jump repeat>>
 <<else>>
 Farmer: I don't know what to do. This is an error debug message. fix ur shit loser
 <<endif>>
@@ -45,19 +47,21 @@ title:out_of_corn
 ---
 Farmer: Shoot! I just remembered though, we're short on corn.
 Farmer: Would you be able to grab 3 Corn for me? There should be some growing in the farm.
-Farmer: The entrance is outside to the left. 
 Farmer: I just need 3 pieces to finish this cornbread!
     <<cam_move NPC_Cam_Rig "pc">>
     ->I can help!
         <<cam_move NPC_Cam_Rig "npc">>
         Farmer: Thank you so much!
+        Farmer: The entrance is outside to the left. 
+        Farmer: You might have to plant some more though. Here, I'll give you 5 seeds. They don't take long to grow.
+        Farmer: Again, I just need 3 pieces of Corn!
             <<dialoguePhaseGetter NPC "questTaken">> 
             <<cam_move NPC_Cam_Rig "return">>
             <<OpenGate GameController>>
     ->Sorry I'm busy
         Farmer: Aww okay. Let me know if you change your mind!
+            <<dialoguePhaseGetter NPC "repeat">>
             <<cam_move NPC_Cam_Rig "return">>
-            <<dialoguePhaseGetter NPC "repeat">> 
 ===
 
 title:quest_taken
@@ -68,6 +72,7 @@ Farmer: Hello again! Were you able to find the corn?
     ->Where's the farm again?
         <<cam_move NPC_Cam_Rig "npc">>
         Farmer: It's outside to the left! I need 3 Corn to finish my cornbread.
+        Farmer: You might have to plant some yourself. Just use the seeds I gave you!
         Farmer: Please let me know when you find some!
             <<cam_move NPC_Cam_Rig "return">>
     ->Nope.
@@ -81,6 +86,7 @@ Farmer: Hello again! Were you able to find the corn?
         <<declare $cornNeeded = 3 - $cornHas>>
         Farmer: It looks like you have {$cornNeeded} left to find!
         Farmer: Take your time! The farm is outside to the left.
+        Farmer: Remember, you may have to plant some. Just use the seeds I gave you!
             <<cam_move NPC_Cam_Rig "return">>
 ===
 
@@ -136,7 +142,10 @@ Farmer: Man, I really wish someone would help me find 3 pieces of Corn...
         <<cam_move NPC_Cam_Rig "npc">>
         <<dialoguePhaseGetter NPC "questTaken">> 
         Farmer: Really?? Thank you!
+        Farmer: You can find some in the farm. You may have to plant some new crops though. They don't take long! Here's 5 seeds.
         Farmer: Let me know when you find some. I need 3 corn.
+            <<OpenGate GameController>>
+            <<cam_move NPC_Cam_Rig "return">>
     ->That would be nice.
         <<cam_move NPC_Cam_Rig "npc">>
         Farmer: If only...
