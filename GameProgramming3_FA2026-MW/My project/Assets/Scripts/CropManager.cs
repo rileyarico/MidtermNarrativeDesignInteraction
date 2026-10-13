@@ -28,14 +28,16 @@ public class CropManager : MonoBehaviour
 
         if(hasCompletedFirstScene == false)
         {
+            Debug.Log("Planeted Starter");
             StarterPlants();
+            hasCompletedFirstScene=true;
         }
     }
 
     private void Update()
     {
         DirtPlot[] dirtPlots = FindObjectsByType<DirtPlot>();
-        Array.Sort(dirtPlots);
+        Array.Sort(dirtPlots, (a, b) => -StringComparer.OrdinalIgnoreCase.Compare(a.transform.parent.name, b.transform.parent.name));
         if (dirtPlots != null)
         {
             //Debug.Log("Dirt plots does not equal null");
@@ -44,6 +46,10 @@ public class CropManager : MonoBehaviour
                 if (dirtPlots[i].isOccupied)
                 {
                     needsPlanting[i] = true;
+                }
+                else
+                {
+                    needsPlanting[i] = false;
                 }
             }
             //Debug.Log("List of plots that are occupied = " + needsPlanting);
@@ -55,7 +61,7 @@ public class CropManager : MonoBehaviour
         if(scene.buildIndex == 0)
         {
             DirtPlot[] allPlotsInScene = FindObjectsByType<DirtPlot>();
-            Array.Sort(allPlotsInScene);
+            Array.Sort(allPlotsInScene, (a, b) => -StringComparer.OrdinalIgnoreCase.Compare(a.transform.parent.name, b.transform.parent.name));
             LoadCrops(allPlotsInScene);
         }
         else
@@ -83,7 +89,7 @@ public class CropManager : MonoBehaviour
     public void StarterPlants()
     {
         DirtPlot[] plotsInScene = FindObjectsByType<DirtPlot>();
-        //Array.Sort(plotsInScene);
+        Array.Sort(plotsInScene, (a, b) => -StringComparer.OrdinalIgnoreCase.Compare(a.transform.parent.name, b.transform.parent.name));
         plotsInScene[plotsInScene.Length - 2].loadCrop(cornSeed);
         plotsInScene[plotsInScene.Length - 1].loadCrop(cornSeed);
     }
