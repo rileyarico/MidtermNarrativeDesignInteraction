@@ -6,8 +6,7 @@ public class BillboardSprite : MonoBehaviour
 {
     private Transform cameraTransform;
 
-
-    void Start()
+    private void Awake()
     {
         cameraTransform = Camera.main.transform;
     }

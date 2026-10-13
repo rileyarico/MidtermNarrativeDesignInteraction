@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
     {
         if(currentCoins > 0)
         {
-            Debug.Log("collected first coin, setting UI active");
+            //Debug.Log("collected first coin, setting UI active");
             coinHUD.gameObject.transform.parent.gameObject.SetActive(true);
         }
     }

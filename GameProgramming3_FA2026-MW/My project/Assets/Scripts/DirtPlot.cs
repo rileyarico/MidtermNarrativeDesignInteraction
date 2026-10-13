@@ -185,6 +185,12 @@ public class DirtPlot : MonoBehaviour
         }
     }
 
+    public void loadCrop(Seed seed)
+    {
+        plantThis(seed);
+        timeLeft = 0;
+        Debug.Log("Loaded crop at " + gameObject.name);
+    }
     public void plantThis(Seed seed)
     {
             doneGrowing = false;
