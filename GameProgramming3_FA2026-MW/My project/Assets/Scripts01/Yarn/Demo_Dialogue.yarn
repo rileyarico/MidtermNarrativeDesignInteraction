@@ -7,6 +7,7 @@ title: loadPhase
 ---
 <<declare $dialoguePhase = "">>
 <<dialoguePhaseSet NPC>> 
+<<VisitedFarmer GameController>>
 <<if $dialoguePhase == "start">>
 <<jump Start>>
 <<elseif $dialoguePhase == "questTaken">>
@@ -87,6 +88,9 @@ title:quest_complete
 ---
 //<<if $visitedYet is false>>
 //if we meet them-
+<<declare $visitedFarmer = false>>
+<<set $visitedFarmer to DidVisitFarmer()>>
+<<if $visitedFarmer == false>>
 <<cam_move NPC_Cam_Rig "npc">>
 Farmer: Woah, how did you get that corn?
 Farmer: That's from my farm actually. I'll go ahead and take that. I need it for my cornbread recipe.
@@ -94,7 +98,7 @@ Farmer: That's from my farm actually. I'll go ahead and take that. I need it for
 Farmer: Even though you stole them, feel free to stick around for when it's done!
 <<dialoguePhaseGetter NPC "questCompleteReturn">>
 Farmer: Thanks for bringing this to me.
-//<<else>>
+<<else>>
 <<cam_move NPC_Cam_Rig "npc">>
 Farmer: Woah, you have the 3 pieces of corn I needed!
 Farmer: I can take that off your hands, thank you!
@@ -110,7 +114,7 @@ Farmer: I can take that off your hands, thank you!
             <<cam_move NPC_Cam_Rig "pc">>
             ->Thanks!
                 <<cam_move NPC_Cam_Rig "return">>
-//<<endif>>
+<<endif>>
 ===
 
 title:quest_complete_return

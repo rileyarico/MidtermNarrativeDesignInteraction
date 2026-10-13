@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour
 
     public bool GateIsOpen = false;
     public bool talkedToFarmer = false;
+    public static bool talkedFarmerYarn = false;
     public string farmerState;
     public static int cornForYarn = 0;
     public int heldSeeds = 0;
@@ -133,6 +134,7 @@ public class GameController : MonoBehaviour
         loadCoins();
         loadNPCData();
     }
+
 
     public void SpawnCharacter(Vector3 loc, Quaternion rot)
     {
@@ -246,14 +248,24 @@ public class GameController : MonoBehaviour
     public void VisitedFarmer()
     {
         talkedToFarmer = true;
+        talkedFarmerYarn = true;
+    }
+
+    [YarnFunction("DidVisitFarmer")]
+    public static bool DidVisitFarmer()
+    {
+        return talkedFarmerYarn;
     }
 
     public void loadNPCData()
     {
-        NPC_Interact npc = FindAnyObjectByType<NPC_Interact>();
-        if (npc != null)
+        GameObject npc = FindAnyObjectByType<NPC_Interact>().gameObject;
+        NPC_Interact npcInter = npc.GetComponent<NPC_Interact>();
+        Debug.Log("NPC is " + npcInter);
+        if (npcInter != null)
         {
-            npc.getYarnPhase(farmerState);
+            Debug.Log("loadNPCData called");
+            npcInter.getYarnPhase(farmerState);
         }
     }
 

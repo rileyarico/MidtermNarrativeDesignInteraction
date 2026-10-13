@@ -7,7 +7,7 @@ public class CropManager : MonoBehaviour
     public static CropManager instance { get; private set; }
     private bool[] needsPlanting = new bool[5];
     public Seed cornSeed;
-    public bool hasCompletedFirstScene = false;
+    public static bool hasCompletedFirstScene = false;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class CropManager : MonoBehaviour
         {
             Debug.Log("Planeted Starter");
             StarterPlants();
-            hasCompletedFirstScene=true;
+            hasCompletedFirstScene = true;
         }
     }
 
@@ -85,7 +85,7 @@ public class CropManager : MonoBehaviour
             }
         }
     }
-
+    
     public void StarterPlants()
     {
         DirtPlot[] plotsInScene = FindObjectsByType<DirtPlot>();
