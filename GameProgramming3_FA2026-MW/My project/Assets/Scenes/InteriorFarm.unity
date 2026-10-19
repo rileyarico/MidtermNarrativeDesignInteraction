@@ -926,6 +926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983ec57c6d13a5d42a7261c942abb6c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC_Interact
+  type: 0
   textData:
     interactText: {fileID: 0}
     interaction: 
@@ -933,8 +934,9 @@ MonoBehaviour:
   camData:
     camController: {fileID: 2087352590}
     npcCamPrefab: {fileID: 879774603}
-  dialogue: {fileID: 0}
-  npcData: {fileID: 0}
+  dialogData:
+    dialogue: {fileID: 0}
+    npcData: {fileID: 0}
   questComplete: 0
 --- !u!1001 &764162290
 PrefabInstance:
@@ -1151,17 +1153,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 764162296}
   m_SourcePrefab: {fileID: 100100000, guid: 52571f68872914e24837210513edea1d, type: 3}
---- !u!114 &764162291 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
-  m_PrefabInstance: {fileID: 764162290}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bec29c0a230741bdac901dba8da47ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &764162292 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3859336324316773513, guid: 52571f68872914e24837210513edea1d, type: 3}
@@ -1702,6 +1693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983ec57c6d13a5d42a7261c942abb6c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC_Interact
+  type: 0
   textData:
     interactText: {fileID: 0}
     interaction: 
@@ -1709,8 +1701,9 @@ MonoBehaviour:
   camData:
     camController: {fileID: 0}
     npcCamPrefab: {fileID: 0}
-  dialogue: {fileID: 764162291}
-  npcData: {fileID: 11400000, guid: b085563507b7f8c47b7e7debbb4c1724, type: 2}
+  dialogData:
+    dialogue: {fileID: 0}
+    npcData: {fileID: 0}
   questComplete: 0
 --- !u!135 &1734269677
 SphereCollider:
