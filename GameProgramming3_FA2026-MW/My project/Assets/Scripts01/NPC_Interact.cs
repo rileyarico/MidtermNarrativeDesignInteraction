@@ -4,23 +4,39 @@ using UnityEngine.InputSystem;
 using Yarn;
 using Yarn.Unity;
 
+public enum iType { npc, item }
+
 public class NPC_Interact : MonoBehaviour
 {
-    //Done! check if player is in the trigger radius
-    //Done! activate interaction text
-    //Done! check if player is in the trigger when they press the interaction key
-    //Done! activate Yarn Spinner -- our Dialogue runner
-    //Done! Checking player controller for movement
-    //Done! player movement is locked
+    [Tooltip("Set the type of interaction to load the correct variables.")]
+    public iType type;
 
-    //semi finished... 'limit' (and eventually control) camera movement
-
-    public TextMeshProUGUI interactText;
-    public string interaction;
+    //we changed our variables to be grouped within structs for visual clarity
+    //and to be able to call groupings easier in editor script.
+    [System.Serializable]
+    public struct TextData
+    { 
+        public TextMeshProUGUI interactText;
+        public string interaction;
+    }
+    [Header("Text Display Variables")]
+    public TextData textData;
     public bool canInteract;
-    public DialogueRunner dialogue;
-    public NPC_Cam_Controller camController;
-    public NPC_Data npcData;
+    [System.Serializable]
+    public struct CamData
+    { 
+        public NPC_Cam_Controller camController;
+        public GameObject npcCamPrefab;
+    }
+    [Header("Camera Data for Dialogue Interaction")]
+    public CamData camData;
+    [System.Serializable]
+    public struct DialogData
+    {
+        public DialogueRunner dialogue;
+        public NPC_Data npcData;
+    }
+    public DialogData dialogData;
     public bool questComplete = false;
 
 
@@ -28,15 +44,41 @@ public class NPC_Interact : MonoBehaviour
     {
         //this behavior is a bit 'static' compared to previous system design techniques
         //but we are making this more 'hard-coded' in an attempt to standardize our NPC_Cam_Rig system
-        camController = transform.GetComponentInChildren<NPC_Cam_Controller>();
+        //camController = transform.GetComponentInChildren<NPC_Cam_Controller>();
     }
+
+    //-----EDITOR FUNCTIONS START-----
+
+    public void SetTextVars()
+    {
+        textData.interactText = GameObject.FindGameObjectWithTag("pText").GetComponent<TextMeshProUGUI>();
+    }
+
+    public void LoadNpcCamPrefab()
+    {
+        Instantiate(camData.npcCamPrefab, transform);
+    }
+
+    public void SetNpcCam()
+    {
+        camData.camController = transform.GetComponentInChildren<NPC_Cam_Controller>();
+    }
+
+    public void SetDialogue()
+    {
+        dialogData.dialogue = GameObject.FindAnyObjectByType<DialogueRunner>();
+        textData.interaction = "Press E to Talk";
+    }
+
+    //-----EDITOR FUNCTIONS COMPLETE-----
+
 
     private void Awake()
     {
-        if(GameController.instance.currentCoins >= npcData.amountNeeded)
+        if(GameController.instance.currentCoins >= dialogData.npcData.amountNeeded)
         {
             questComplete = true;
-            npcData.currentPhase = NPC_Data.dialoguePhase.questComplete;
+            dialogData.npcData.currentPhase = NPC_Data.dialoguePhase.questComplete;
         }
     }
 
@@ -44,7 +86,7 @@ public class NPC_Interact : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            setText(interaction);
+            setText(textData.interaction);
             canInteract = true;
         }
     }
@@ -61,7 +103,7 @@ public class NPC_Interact : MonoBehaviour
     //setter method for interact text
     public void setText(string txt)
     {
-        interactText.text = txt;
+        textData.interactText.text = txt;
     }
 
     public void Update()
@@ -72,8 +114,8 @@ public class NPC_Interact : MonoBehaviour
             {
                 Debug.Log("You talked to the NPC");
                 setText("");
-                camController.movePlayer();
-                dialogue.StartDialogue(npcData.startingNode); //be mindful of the case of yarnSpinner node
+                camData.camController.movePlayer();
+                dialogData.dialogue.StartDialogue(dialogData.npcData.startingNode); //be mindful of the case of yarnSpinner node
                 canInteract = false;
             }
         }
@@ -83,7 +125,7 @@ public class NPC_Interact : MonoBehaviour
     public void setYarnPhase()
     {
         InMemoryVariableStorage vData = GameObject.FindAnyObjectByType<InMemoryVariableStorage>();
-        vData.SetValue("$dialoguePhase", npcData.currentPhase.ToString());
+        vData.SetValue("$dialoguePhase", dialogData.npcData.currentPhase.ToString());
     }
 
     //this is the 'get' of the current phase MADE in our yarnSpinner dialogue based on what options we have selected
@@ -93,19 +135,19 @@ public class NPC_Interact : MonoBehaviour
         Debug.Log("GetYarnPhase called. Setting phase to " + phase);
         if (phase == "questTaken")
         {
-            npcData.currentPhase = NPC_Data.dialoguePhase.questTaken;
+            dialogData.npcData.currentPhase = NPC_Data.dialoguePhase.questTaken;
             GameController.instance.farmerState = "questTaken";
             Debug.Log("farmerState is = " + GameController.instance.farmerState);
         }
         if (phase == "questCompleteReturn")
         {
-            npcData.currentPhase = NPC_Data.dialoguePhase.questCompleteReturn;
+            dialogData.npcData.currentPhase = NPC_Data.dialoguePhase.questCompleteReturn;
             GameController.instance.farmerState = "questCompleteReturn";
             Debug.Log("farmerState is = " + GameController.instance.farmerState);
         }
         if(phase == "repeat")
         {
-            npcData.currentPhase = NPC_Data.dialoguePhase.repeat;
+            dialogData.npcData.currentPhase = NPC_Data.dialoguePhase.repeat;
             GameController.instance.farmerState = "repeat";
             Debug.Log("farmerState is = " + GameController.instance.farmerState);
         }
@@ -113,6 +155,6 @@ public class NPC_Interact : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        npcData.resetData();
+        dialogData.npcData.resetData();
     }
 }
